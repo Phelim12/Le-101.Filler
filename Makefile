@@ -25,7 +25,8 @@ DIR_SRC = Sources/
 
 DIR_LIB = Libft/
 
-NAME_SRC = 	main.c tools_filler.c refresh_filler.c algo_filler.c
+NAME_SRC = 	algo_controle_filler.c algo_filler.c main.c refresh_game_filler.c \
+			algo_dist_filler.c params_filler.c tools_filler.c
 
 SRC =	$(addprefix $(DIR_SRC), $(NAME_SRC))
 
