@@ -33,7 +33,7 @@ void		ft_pass_lines(int nb)
 	}
 }
 
-int		ft_count_pos(char **tab, int player)
+int		ft_count_pos(t_game info, char **tab, int player)
 {
 	int ret;
 	int	y;
@@ -47,7 +47,12 @@ int		ft_count_pos(char **tab, int player)
 		while (tab[y][++x])
 		{
 			if (player == 3 && (tab[y][x] == '2' || tab[y][x] == '3'))
+			{
+				if (tab[y][x] == '3' && (y == 0 || x == 0 ||
+				y == (info.height_map - 1) || x == (info.width_map - 1)))
+					ret += 100;
 				ret++;
+			}
 			if (player == 2 && tab[y][x] == '2')
 				ret++;
 			if (player == 1 && tab[y][x] == '1')

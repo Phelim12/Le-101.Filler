@@ -67,9 +67,20 @@ void	ft_fill_new_tab(t_game info, char **tab, int y, int x)
 	}
 }
 
+void	ft_free_tab(char ***tab)
+{
+	int y;
+
+	y = -1;
+	while ((*tab)[++y])
+		free((*tab)[y]);
+	free(*tab);
+}
+
 int		ft_check_ncase(t_game info, t_pos pos)
 {
 	char	**tab;
+	int		ret;
 	int		y;
 	int		x;
 
@@ -82,5 +93,7 @@ int		ft_check_ncase(t_game info, t_pos pos)
 			if (tab[y][x] == '2')
 				ft_fill_new_tab(info, tab, y, x);
 	}
-	return (ft_count_pos(tab, 3));
+	ret = ft_count_pos(info, tab, 3);
+	ft_free_tab(&tab);
+	return (ret);
 }

@@ -25,6 +25,7 @@ typedef struct	s_pos
 typedef struct	s_game
 {
 	t_pos	way;
+	t_pos	before;
 	t_pos	way_enemy;
 	char	**pcs;
 	char	**map;
@@ -49,7 +50,7 @@ void	ft_go_opposed_corner(t_game *info);
 int     ft_check_dist(t_game info, t_pos place);
 t_pos   ft_print_dist(t_game info, t_pos *all, int cur);
 
-int		ft_play(t_game info, int rush);
+int		ft_play(t_game *info, int rush);
 int		ft_can_place_pcs(t_game info, int map_y, int map_x);
 t_pos	ft_print_good_solve(t_game info, t_pos *all, int cur, int rush);
 
@@ -65,6 +66,6 @@ int		ft_refresh_game(t_game *info, int turn);
 
 t_pos	ft_fill_pos(int y, int x);
 void		ft_pass_lines(int nb);
-int		ft_count_pos(char **tab, int player);
+int		ft_count_pos(t_game info, char **tab, int player);
 
 #endif
