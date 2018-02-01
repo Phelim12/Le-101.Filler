@@ -35,13 +35,14 @@ static int	ft_read_file(char **str, int fd)
 
 int			get_next_line(int const fd, char **line)
 {
-	static char	*str;
+	static char	*str = NULL;
 	char		*save;
 	int			f;
 	int			ret;
 
 	f = 0;
-	if (!line || BUFF_SIZE < 0 || fd < 0 || (!str && !(str = ft_strnew(f++))))
+	if ((fd < 0 || line == NULL || read(fd, str, 0) < 0) ||
+	(!str && !(str = ft_strnew(f++))))
 		return (-1);
 	while (!(save = ft_strchr(str, '\n')))
 	{
@@ -54,8 +55,7 @@ int			get_next_line(int const fd, char **line)
 			return (-1);
 	}
 	*line = ft_strsub(str, 0, ft_strlen(str) - ft_strlen(save));
-	if (f == 1)
-		free(str);
+	ft_strdel(&str);
 	str = ft_strdup(save + 1);
 	return (1);
 }

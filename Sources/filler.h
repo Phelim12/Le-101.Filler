@@ -25,8 +25,6 @@ typedef struct	s_pos
 typedef struct	s_game
 {
 	t_pos	way;
-	t_pos	before;
-	t_pos	way_enemy;
 	char	**pcs;
 	char	**map;
 	char	player;
@@ -39,9 +37,11 @@ typedef struct	s_game
 	char	start_enemy;
 }				t_game;
 
-
-
-int		ft_check_ncase(t_game info, t_pos pos);
+int		ft_start_reducto(t_game info);
+void    ft_go_alpha_point(t_game *info);
+void    ft_go_beta_point(t_game *info);
+void	ft_free_tab(char ***tab);
+int		ft_reducto(t_game info, t_pos pos);
 char	**ft_new_map(t_game info, t_pos pos, int y, int x);
 void	ft_fill_new_tab(t_game info, char **tab, int y, int x);
 
@@ -54,18 +54,18 @@ int		ft_play(t_game *info, int rush);
 int		ft_can_place_pcs(t_game info, int map_y, int map_x);
 t_pos	ft_print_good_solve(t_game info, t_pos *all, int cur, int rush);
 
-void		ft_get_player(t_game *info);
+int		ft_get_player(t_game *info);
 int		ft_pos_start_enemy(t_game *info);
-void		ft_good_square(char player, char *p1, char *p2);
+void	ft_good_square(char player, char *p1, char *p2);
 
 void	ft_modif_pcs(t_game *info);
 void	ft_refresh_pcs(t_game *info);
 void	ft_modif_map(t_game *info);
-void	ft_refresh_map(t_game *info, char *line, int turn);
+void	ft_refresh_map(t_game *info, int turn);
 int		ft_refresh_game(t_game *info, int turn);
 
 t_pos	ft_fill_pos(int y, int x);
-void		ft_pass_lines(int nb);
+void	ft_pass_lines(int nb);
 int		ft_count_pos(t_game info, char **tab, int player);
 
 #endif

@@ -78,7 +78,7 @@ t_pos	ft_print_good_solve(t_game info, t_pos *all, int cur, int rush)
 	ncase1 = -1;
 	while (++s_cur < cur)
 	{
-		if (ncase1 > (ncase2 = ft_check_ncase(info, all[s_cur])) || ncase1 == -1)
+		if (ncase1 > (ncase2 = ft_reducto(info, all[s_cur])) || ncase1 == -1)
 		{
 			ncase1 = ncase2;
 			print.y = all[s_cur].y;
@@ -88,7 +88,7 @@ t_pos	ft_print_good_solve(t_game info, t_pos *all, int cur, int rush)
 	if (rush >= 0)
 		return (ft_print_dist(info, all, cur));
 	if ((print.y == all[0].y && print.x == all[0].x) && cur > 1 && 
-		ft_check_ncase(info, all[0]) == ft_check_ncase(info, all[1]))
+		ft_reducto(info, all[0]) == ft_reducto(info, all[1]))
 		return (ft_print_on_side(info, all, cur));
 	return (print);
 }
@@ -114,9 +114,12 @@ int		ft_play(t_game *info, int rush)
 		}
 	}
 	if (cur == 0)
+	{
+		free(all);
 		return (0);
+	}
 	print = ft_print_good_solve(*info, all, cur, rush);
-	info->before = ft_fill_pos(print.y, print.x);
 	ft_printf("%d %d\n", print.y, print.x);
+	free(all);
 	return (1);
 }

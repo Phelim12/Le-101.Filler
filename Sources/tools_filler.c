@@ -22,6 +22,16 @@ t_pos	ft_fill_pos(int y, int x)
 	return (ret);
 }
 
+void	ft_free_tab(char ***tab)
+{
+	int y;
+
+	y = -1;
+	while ((*tab)[++y])
+		free((*tab)[y]);
+	free(*tab);
+}
+
 void		ft_pass_lines(int nb)
 {
 	char	*line;
@@ -48,9 +58,8 @@ int		ft_count_pos(t_game info, char **tab, int player)
 		{
 			if (player == 3 && (tab[y][x] == '2' || tab[y][x] == '3'))
 			{
-				if (tab[y][x] == '3' && (y == 0 || x == 0 ||
-				y == (info.height_map - 1) || x == (info.width_map - 1)))
-					ret += 100;
+				if (!y || !x || y == (info.height_map - 1) || x == (info.width_map - 1))
+					ret += 10;
 				ret++;
 			}
 			if (player == 2 && tab[y][x] == '2')

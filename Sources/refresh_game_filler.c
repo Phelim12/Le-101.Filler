@@ -69,8 +69,9 @@ void	ft_modif_map(t_game *info)
 	}
 }
 
-void	ft_refresh_map(t_game *info, char *line, int turn)
+void	ft_refresh_map(t_game *info, int turn)
 {
+	char	*line;
 	int		start;
 	int		cur;
 
@@ -101,8 +102,7 @@ int		ft_refresh_game(t_game *info, int turn)
 		{
 			info->width_map = ft_atoi(ft_strrchr(line, 32));
 			info->height_map = ft_atoi(ft_strchr(line, 32));
-			free(line);
-			ft_refresh_map(info, line, turn);
+			ft_refresh_map(info, turn);
 		}
 		else if (ft_strncmp(line, "Piece ", 5) == 0)
 		{
@@ -112,8 +112,7 @@ int		ft_refresh_game(t_game *info, int turn)
 			free(line);
 			return (1);
 		}
-		else
-			free(line);
+		ft_strdel(&line);
 	}
 	return (0);
 }

@@ -35,49 +35,70 @@ char	**ft_new_map(t_game info, t_pos pos, int y, int x)
 	return (ret);
 }
 
-void	ft_fill_new_tab(t_game info, char **tab, int y, int x)
+int		ft_start_reducto(t_game info)
 {
-	int s_x;
-	int	s_y;
+	int y;
+	int x;
+
+	y = 0;
+	while (++y < (info.height_map - 2))
+	{
+		x = 0;
+		while (++x < (info.width_map - 2))
+		{
+			if (info.map[y][x] == '2' && 
+			(info.map[y][x - 1] == '1' || info.map[y][x + 1] == '1' || 
+			info.map[y - 1][x] == '1' || info.map[y + 1][x] == '1' || 
+			info.map[y + 1][x + 1] == '1' || info.map[y - 1][x - 1] == '1' ||
+			info.map[y + 1][x - 1] == '1' || info.map[y - 1][x + 1] == '1'))
+				return (-10);
+		}
+	}
+	return (2);
+}
+
+void	ft_reducto_ordinate(t_game info, char **tab, int y, int x)
+{
+	int s_y;
 
 	s_y = y;
-	s_x = x;
-	while (x < info.width_map && tab[y][x] != '1')
-	{
-		tab[y][x] = (tab[y][x] == '2') ? '2' : '3';
-		x++;
-	}
-	x = s_x;
-	while (x >= 0 && tab[y][x] != '1')
-	{
-		tab[y][x] = (tab[y][x] == '2') ? '2' : '3';
-		x--;
-	}
-	x = s_x;
 	while (y < info.height_map && tab[y][x] != '1')
 	{
-		tab[y][x] = (tab[y][x] == '2') ? '2' : '3';
+		if (tab[y][x] == '0')
+			tab[y][x] = '3';  
 		y++;
 	}
 	y = s_y;
 	while (y >= 0 && tab[y][x] != '1')
 	{
-		tab[y][x] = (tab[y][x] == '2') ? '2' : '3';
+		if (tab[y][x] == '0')
+			tab[y][x] = '3';  
 		y--;
 	}
 }
 
-void	ft_free_tab(char ***tab)
+void	ft_reducto_abscissa(t_game info, char **tab, int y, int x)
 {
-	int y;
+	int s_x;
 
-	y = -1;
-	while ((*tab)[++y])
-		free((*tab)[y]);
-	free(*tab);
+	s_x = x;
+	while (x < info.width_map && tab[y][x] != '1')
+	{
+		if (tab[y][x] == '0')
+			tab[y][x] = '3';  
+		x++;
+	}
+	x = s_x;
+	while (x >= 0 && tab[y][x] != '1')
+	{
+		if (tab[y][x] == '0')
+			tab[y][x] = '3';  
+		x--;
+	}
+	
 }
 
-int		ft_check_ncase(t_game info, t_pos pos)
+int		ft_reducto(t_game info, t_pos pos)
 {
 	char	**tab;
 	int		ret;
@@ -91,7 +112,10 @@ int		ft_check_ncase(t_game info, t_pos pos)
 		x = -1;
 		while (tab[y][++x])
 			if (tab[y][x] == '2')
-				ft_fill_new_tab(info, tab, y, x);
+			{
+				ft_reducto_ordinate(info, tab, y, x);
+				ft_reducto_abscissa(info, tab, y, x);
+			}
 	}
 	ret = ft_count_pos(info, tab, 3);
 	ft_free_tab(&tab);

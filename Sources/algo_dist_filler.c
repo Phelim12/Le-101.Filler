@@ -13,50 +13,68 @@
 
 #include "filler.h"
 
-void	ft_go_opposed_corner(t_game *info)
+void    ft_go_alpha_point(t_game *info)
 {
-	if (info->start_enemy == 0)
-	{
-		info->way.y = 0;
-		info->way.x = 0;
-	}
-	if (info->start_enemy == 1)
-	{
-		info->way.y = 0;
-		info->way.x = (info->width_map - 1);
-	}
-	if (info->start_enemy == 2)
-	{
-		info->way.y = (info->height_map - 1);
-		info->way.x = 0;
-	}
-	if (info->start_enemy == 3)
-	{
-		info->way.y = (info->height_map - 1);
-		info->way.x = (info->width_map - 1);
-	}
+    if (info->start_enemy == 0)
+    {
+        info->way.y = 0; 
+        info->way.x = (info->width_map - 1);
+    }
+    if (info->start_enemy == 1)
+    {
+        info->way.y = 0; 
+        info->way.x = 0;
+    }
+    if (info->start_enemy == 2)
+    {
+        info->way.y = 0;  
+        info->way.x = 0;
+    }
+    if (info->start_enemy == 3)
+    {
+        info->way.y = 0; 
+        info->way.x = (info->width_map - 1);
+    }
+}
+
+void    ft_go_beta_point(t_game *info)
+{
+    if (info->start_enemy == 0)
+    {
+        info->way.y = (info->height_map - 1);
+        info->way.x = 0;
+    }
+    if (info->start_enemy == 1)
+    {
+        info->way.y = (info->height_map - 1);
+        info->way.x = (info->width_map - 1);
+    }
+    if (info->start_enemy == 2)
+    {
+        info->way.y = (info->height_map - 1);
+        info->way.x = (info->width_map - 1);
+    }
+    if (info->start_enemy == 3)
+    {
+        info->way.y = (info->height_map - 1);
+        info->way.x = 0;
+    }
 }
 
 int		ft_distance_pos(t_pos a, t_pos b)
 {
-	int dis_y;
-	int	dis_x;
+	int ret;
 
-	dis_y = 0;
-	dis_x = 0;
+    ret = 0;
 	if (a.y < b.y)
-		while ((a.y + dis_y) < b.y)
-			dis_y++;
+		ret += b.y - a.y;
 	else
-		while ((b.y + dis_y) < a.y)
-			dis_y++;
+        ret += a.y - b.y;
 	if (a.x < b.x)
-		while ((a.x + dis_x) < b.x)
-			dis_x++;
+        ret += b.x - a.x;
 	else
-		while ((b.x + dis_x) < a.x)
-			dis_x++;
-	return (dis_x + dis_y);
+        ret += a.x - b.x;
+	return (ret);
 }
 
 int     ft_check_dist(t_game info, t_pos place)

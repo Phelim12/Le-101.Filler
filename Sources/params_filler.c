@@ -13,16 +13,22 @@
 
 #include "filler.h"
 
-void		ft_get_player(t_game *info)
+int		ft_get_player(t_game *info)
 {
 	char *line;
 
 	get_next_line(0, &line);
 	if (line[10] == '1')
 		info->player = 1;
-	if (line[10] == '2')
+	else if (line[10] == '2')
 		info->player = 2;
+	else
+	{
+		free(line);
+		return (-1);
+	}
 	free(line);
+	return (1);
 }
 
 void		ft_good_square(char player, char *p1, char *p2)
