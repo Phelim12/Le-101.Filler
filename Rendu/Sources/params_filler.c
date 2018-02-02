@@ -31,7 +31,7 @@ int		ft_get_player(t_game *info)
 	return (1);
 }
 
-void		ft_good_square(char player, char *p1, char *p2)
+void	ft_good_square(char player, char *p1, char *p2)
 {
 	if (player == 1)
 	{
@@ -43,6 +43,28 @@ void		ft_good_square(char player, char *p1, char *p2)
 		*p1 = 2;
 		*p2 = 1;
 	}
+}
+
+char	**ft_new_map(t_game info, t_pos pos, int y, int x)
+{
+	char **ret;
+
+	ret = (char **)malloc(sizeof(char *) * (info.height_map + 1));
+	while (info.map[++y])
+		ret[y] = ft_strdup(info.map[y]);
+	ret[y] = NULL;
+	y = pos.y;
+	while (y < (pos.y + info.height_pcs))
+	{
+		x = pos.x;
+		while (x < (pos.x + info.width_pcs))
+		{
+			ret[y][x] = info.pcs[y - pos.y][x - pos.x];
+			x++;
+		}
+		y++;
+	}
+	return (ret);
 }
 
 int		ft_pos_start_enemy(t_game *info)
@@ -66,7 +88,7 @@ int		ft_pos_start_enemy(t_game *info)
 					ret += 2;
 				if (x > (info->width_map / 2))
 					ret += 1;
-				block = 1; 
+				block = 1;
 			}
 		}
 	}

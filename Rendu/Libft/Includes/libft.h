@@ -14,7 +14,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BOOL char 
+# define BOOL char
 # define FT_ABS(x)	(x < 0 ? -x : x)
 # define FT_NEG(x)	(x < 0 ? 1 : 0)
 # define FALSE 0

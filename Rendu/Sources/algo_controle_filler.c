@@ -13,50 +13,6 @@
 
 #include "filler.h"
 
-char	**ft_new_map(t_game info, t_pos pos, int y, int x)
-{
-	char **ret;
-
-	ret = (char **)malloc(sizeof(char *) * (info.height_map + 1));
-	while (info.map[++y])
-		ret[y] = ft_strdup(info.map[y]);
-	ret[y] = NULL;
-	y = pos.y;
-	while (y < (pos.y + info.height_pcs))
-	{
-		x = pos.x;
-		while (x < (pos.x + info.width_pcs))
-		{
-			ret[y][x] = info.pcs[y - pos.y][x - pos.x];
-			x++;
-		}
-		y++;
-	}
-	return (ret);
-}
-
-int		ft_start_reducto(t_game info)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while (++y < (info.height_map - 2))
-	{
-		x = 0;
-		while (++x < (info.width_map - 2))
-		{
-			if (info.map[y][x] == '2' && 
-			(info.map[y][x - 1] == '1' || info.map[y][x + 1] == '1' || 
-			info.map[y - 1][x] == '1' || info.map[y + 1][x] == '1' || 
-			info.map[y + 1][x + 1] == '1' || info.map[y - 1][x - 1] == '1' ||
-			info.map[y + 1][x - 1] == '1' || info.map[y - 1][x + 1] == '1'))
-				return (-10);
-		}
-	}
-	return (2);
-}
-
 void	ft_reducto_ordinate(t_game info, char **tab, int y, int x)
 {
 	int s_y;
@@ -65,14 +21,14 @@ void	ft_reducto_ordinate(t_game info, char **tab, int y, int x)
 	while (y < info.height_map && tab[y][x] != '1')
 	{
 		if (tab[y][x] == '0')
-			tab[y][x] = '3';  
+			tab[y][x] = '3';
 		y++;
 	}
 	y = s_y;
 	while (y >= 0 && tab[y][x] != '1')
 	{
 		if (tab[y][x] == '0')
-			tab[y][x] = '3';  
+			tab[y][x] = '3';
 		y--;
 	}
 }
@@ -85,17 +41,65 @@ void	ft_reducto_abscissa(t_game info, char **tab, int y, int x)
 	while (x < info.width_map && tab[y][x] != '1')
 	{
 		if (tab[y][x] == '0')
-			tab[y][x] = '3';  
+			tab[y][x] = '3';
 		x++;
 	}
 	x = s_x;
 	while (x >= 0 && tab[y][x] != '1')
 	{
 		if (tab[y][x] == '0')
-			tab[y][x] = '3';  
+			tab[y][x] = '3';
 		x--;
 	}
-	
+}
+
+void	ft_reducto_diag1(t_game info, char **tab, int y, int x)
+{
+	int dia;
+
+	dia = 0;
+	while ((x + dia) < info.width_map && (y + dia) < info.height_map &&
+	tab[(y + dia)][(x + dia)] != '1')
+	{
+		if (tab[(y + dia)][(x + dia)] == '0')
+			tab[(y + dia)][(x + dia)] = '3';
+		dia++;
+	}
+	dia = 0;
+	while ((x - dia) >= 0 && (y - dia) >= 0 &&
+	tab[(y - dia)][(x - dia)] != '1')
+	{
+		if (tab[(y - dia)][(x - dia)] == '0')
+			tab[(y - dia)][(x - dia)] = '3';
+		dia++;
+	}
+}
+
+void	ft_reducto_diag2(t_game info, char **tab, int y, int x)
+{
+	int dia1;
+	int dia2;
+
+	dia1 = 0;
+	dia2 = 0;
+	while ((x + dia1) < info.width_map && (y - dia2) >= 0 &&
+	tab[(y - dia2)][(x + dia1)] != '1')
+	{
+		if (tab[(y - dia2)][(x + dia1)] == '0')
+			tab[(y - dia2)][(x + dia1)] = '3';
+		dia1++;
+		dia2++;
+	}
+	dia1 = 0;
+	dia2 = 0;
+	while ((x - dia1) >= 0 && (y + dia2) < info.height_map &&
+	tab[(y + dia2)][(x - dia1)] != '1')
+	{
+		if (tab[(y + dia2)][(x - dia1)] == '0')
+			tab[(y + dia2)][(x - dia1)] = '3';
+		dia1++;
+		dia2++;
+	}
 }
 
 int		ft_reducto(t_game info, t_pos pos)
@@ -115,6 +119,8 @@ int		ft_reducto(t_game info, t_pos pos)
 			{
 				ft_reducto_ordinate(info, tab, y, x);
 				ft_reducto_abscissa(info, tab, y, x);
+				ft_reducto_diag1(info, tab, y, x);
+				ft_reducto_diag2(info, tab, y, x);
 			}
 	}
 	ret = ft_count_pos(info, tab, 3);

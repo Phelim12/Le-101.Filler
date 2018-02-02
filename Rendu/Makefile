@@ -15,18 +15,18 @@
 
 CC = gcc
 
+NAME = clcreuso.filler
+
 C_FLAGS = -Wall -Wextra -Werror
 
-NAME = players/clcreuso.filler
-
-DIR_INC = Libft/Includes/
+DIR_INC = Includes/
 
 DIR_SRC = Sources/
 
 DIR_LIB = Libft/
 
-NAME_SRC = 	algo_controle_filler.c algo_filler.c main.c refresh_game_filler.c \
-			algo_dist_filler.c params_filler.c tools_filler.c
+NAME_SRC = 	algo_controle_filler.c refresh_game_filler.c algo_way_filler.c \
+			params_filler.c tools_filler.c main_filler.c algo_filler.c 
 
 SRC =	$(addprefix $(DIR_SRC), $(NAME_SRC))
 
@@ -36,22 +36,22 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C $(DIR_LIB)
-	@$(CC) $(OBJ) -L $(DIR_LIB) -lft -o $(NAME) 
-	@echo "\033[0;32m✅️   make ft_ls."
+	@$(CC) $(C_FLAGS) $(OBJ) -L $(DIR_LIB) -lft -o $(NAME) 
+	@echo "\033[0;32m✅️   make filler.\033[0m"
 
 ./%.o: ./%.c
-	@$(CC) -I $(DIR_INC) -o $@ -c $< 
-	@echo "\033[0;32m✅️   $@ created."
+	@$(CC) $(C_FLAGS) -I $(DIR_INC) -o $@ -c $< 
+	@echo "\033[0;32m✅️   $@ created.\033[0m"
 
 clean:
 	@make clean -C $(DIR_LIB)
 	@rm -f $(OBJ)
-	@echo "\033[38;5;202m🗑️   clean ft_ls.\033[0m\033[K" 
+	@echo "\033[38;5;202m🗑️   clean filler.\033[0m" 
 
 fclean: clean
 	@make fclean -C $(DIR_LIB)
 	@rm -f $(NAME)
-	@echo "\033[38;5;196m🗑️   fclean ft_ls.\033[0m\033[K" 
+	@echo "\033[38;5;196m🗑️   fclean filler.\033[0m" 
 
 re: fclean all
-
+	

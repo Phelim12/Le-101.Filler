@@ -13,6 +13,12 @@
 
 #include "filler.h"
 
+void	ft_free_game(t_game *info)
+{
+	ft_free_tab(&info->map);
+	ft_free_tab(&info->pcs);
+}
+
 t_pos	ft_fill_pos(int y, int x)
 {
 	t_pos ret;
@@ -32,7 +38,7 @@ void	ft_free_tab(char ***tab)
 	free(*tab);
 }
 
-void		ft_pass_lines(int nb)
+void	ft_pass_lines(int nb)
 {
 	char	*line;
 
@@ -58,8 +64,9 @@ int		ft_count_pos(t_game info, char **tab, int player)
 		{
 			if (player == 3 && (tab[y][x] == '2' || tab[y][x] == '3'))
 			{
-				if (!y || !x || y == (info.height_map - 1) || x == (info.width_map - 1))
-					ret += 10;
+				if (!y || !x || y == (info.height_map - 1) ||
+					x == (info.width_map - 1))
+					ret += 1;
 				ret++;
 			}
 			if (player == 2 && tab[y][x] == '2')
