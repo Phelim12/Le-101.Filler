@@ -51,7 +51,7 @@ int		ft_can_place_pcs(t_game info, int map_y, int map_x)
 	return (0);
 }
 
-void	ft_print_good_solve(t_game *info, t_pos *all, int cur, int rush)
+void	ft_print_good_solve(t_game *info, t_pos *all, int cur, int s)
 {
 	int		ncase1;
 	int		ncase2;
@@ -67,7 +67,7 @@ void	ft_print_good_solve(t_game *info, t_pos *all, int cur, int rush)
 			info->print = ft_fill_pos(all[s_cur].y, all[s_cur].x);
 		}
 	}
-	if (rush >= 0)
+	if (s >= 0)
 		info->print = ft_print_dist(*info, all, cur);
 	if ((info->print.y == all[0].y && info->print.x == all[0].x) && cur > 1 &&
 		ft_reducto(*info, all[0]) == ft_reducto(*info, all[1]))

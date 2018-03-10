@@ -83,7 +83,7 @@ void			ft_reducto_abscissa(t_game info, char **tab, int y, int x);
 int				ft_play(t_game *info, int rush);
 t_pos			ft_print_end(t_game info, t_pos *all, int cur);
 int				ft_can_place_pcs(t_game info, int map_y, int map_x);
-void			ft_print_good_solve(t_game *info, t_pos *all, int cur, int rush);
+void			ft_print_good_solve(t_game *info, t_pos *all, int cur, int s);
 
 /*
 **┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
